@@ -1,0 +1,181 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+import { supabase } from "../../lib/supabase";
+
+const { data } = await supabase
+.from("settings")
+.select("*")
+.single();
+---
+
+<AdminLayout title="Settings">
+
+<AdminNavbar/>
+
+<section class="table-card">
+
+<h2>Pengaturan Website</h2>
+
+<form
+action="/api/updateSettings"
+method="POST"
+>
+
+<input
+type="hidden"
+name="id"
+value={data.id}
+/>
+
+<div class="form-group">
+
+<label>Nama Event</label>
+
+<input
+name="event_name"
+value={data.event_name}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>Tanggal Event</label>
+
+<input
+type="date"
+name="event_date"
+value={data.event_date}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>Lokasi</label>
+
+<input
+name="location"
+value={data.location}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>WhatsApp</label>
+
+<input
+name="whatsapp"
+value={data.whatsapp}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>Email</label>
+
+<input
+name="email"
+value={data.email}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>Instagram</label>
+
+<input
+name="instagram"
+value={data.instagram}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>Google Maps</label>
+
+<input
+name="maps"
+value={data.maps}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>Harga</label>
+
+<input
+type="number"
+name="price"
+value={data.price}
+/>
+
+</div>
+<div class="form-group">
+<label>Tanggal Pendaftaran Dibuka</label>
+<input type="date" name="reg_open_date" value={data.reg_open_date} />
+</div>
+
+<div class="form-group">
+<label>Tanggal Pendaftaran Ditutup</label>
+<input type="date" name="reg_close_date" value={data.reg_close_date} />
+</div>
+
+<div class="form-group">
+<label>Tanggal Race Pack Collection</label>
+<input type="date" name="race_pack_date" value={data.race_pack_date} />
+</div>
+
+<div class="form-group">
+<label>Tanggal Awarding</label>
+<input type="date" name="awarding_date" value={data.awarding_date} />
+</div>
+
+<button
+class="btn btn-success"
+>
+
+💾 Simpan
+
+</button>
+
+</form>
+
+</section>
+
+</AdminLayout>
+
+<style>
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    max-width: 480px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #33343a;
+  }
+
+  .form-group input {
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .form-group input:focus {
+    border-color: #2e7d32;
+  }
+</style>

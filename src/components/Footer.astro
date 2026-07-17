@@ -1,0 +1,102 @@
+---
+import { supabase } from "../lib/supabase";
+
+const { data: settings } = await supabase
+    .from("settings")
+    .select("*")
+    .single();
+
+const eventName = settings?.event_name || "Waru Turi Fun Run";
+const location = settings?.location || "Bendung Gerak Waru Turi, Banyuwangi, Jawa Timur";
+const whatsapp = settings?.whatsapp || "";
+const email = settings?.email || "officialwaruturirun@gmail.com";
+const instagram = settings?.instagram || "#";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+
+    <div class="container footer-content">
+
+        <!-- Kolom 1 -->
+        <div class="footer-column">
+
+            <h3>{eventName}</h3>
+
+            <p>
+                {location}
+            </p>
+
+            {whatsapp && <p>📞 {whatsapp}</p>}
+
+            <p>✉ {email}</p>
+
+        </div>
+
+        <!-- Kolom 2 -->
+        <div class="footer-column">
+
+            <h3>Partner & Sponsor</h3>
+
+            <ul>
+
+                <li>Perum Jasa Tirta I (PJT I)</li>
+
+                <li>Radar Banyuwangi</li>
+
+                <li>Bendung Gerak Waru Turi</li>
+
+                <li>R-Project Event Organizer</li>
+
+            </ul>
+
+        </div>
+
+        <!-- Kolom 3 -->
+        <div class="footer-column">
+
+            <h3>Menu Utama</h3>
+
+            <ul>
+
+                <li><a href="#home">Beranda</a></li>
+
+                <li><a href="#category">Kategori</a></li>
+
+                <li><a href="#gallery">Galeri</a></li>
+
+                <li><a href="#faq">FAQ</a></li>
+
+            </ul>
+
+        </div>
+
+        <!-- Kolom 4 -->
+        <div class="footer-column">
+
+            <h3>Ikuti Kami</h3>
+
+            <div class="social-icons">
+
+                <a href={instagram} target="_blank" rel="noopener noreferrer">
+                    <img src="/images/instagram.png" alt="Instagram">
+                </a>
+
+                <a href="#">
+                    <img src="/images/facebook.png" alt="Facebook">
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        Copyright © {currentYear} {eventName}. All rights reserved.
+
+    </div>
+
+</footer>

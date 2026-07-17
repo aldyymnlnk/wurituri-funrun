@@ -1,0 +1,108 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../../../components/admin/AdminNavbar.astro";
+
+import { supabase } from "../../../../lib/supabase";
+
+const id = Astro.params.id;
+
+const { data: gallery } = await supabase
+.from("gallery")
+.select("*")
+.eq("id", id)
+.single();
+
+if (!gallery) {
+
+    return Astro.redirect("/admin/gallery");
+
+}
+---
+
+<AdminLayout title="Edit Gallery">
+
+<AdminSidebar />
+
+<main class="admin-content">
+
+<AdminNavbar />
+
+<section class="table-card">
+
+<h2>
+
+Edit Gallery
+
+</h2>
+
+<form
+action="/api/updateGallery"
+method="POST"
+>
+
+<input
+type="hidden"
+name="id"
+value={gallery.id}
+/>
+
+<div class="form-group">
+
+<label>
+
+Judul
+
+</label>
+
+<input
+type="text"
+name="title"
+value={gallery.title}
+required
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+URL Gambar
+
+</label>
+
+<input
+type="text"
+name="image"
+value={gallery.image}
+required
+/>
+
+</div>
+
+<button
+class="btn btn-success"
+type="submit"
+>
+
+💾 Simpan
+
+</button>
+
+<a
+href="/admin/gallery"
+class="btn btn-warning"
+>
+
+⬅ Kembali
+
+</a>
+
+</form>
+
+</section>
+
+</main>
+
+</AdminLayout>

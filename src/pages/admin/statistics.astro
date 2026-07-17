@@ -1,0 +1,309 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+import { supabase } from "../../lib/supabase";
+
+// ===============================
+// AMBIL SEMUA DATA PESERTA
+// ===============================
+
+const { data: participants } = await supabase
+  .from("participants")
+  .select("*");
+
+const list = participants ?? [];
+
+// ===============================
+// HELPER: hitung jumlah per grup
+// ===============================
+
+function countBy(arr: any[], key: string): Record<string, number> {
+  return arr.reduce((acc: Record<string, number>, item: any) => {
+    const val = item[key] || "Tidak diisi";
+    acc[val] = (acc[val] || 0) + 1;
+    return acc;
+  }, {});
+}
+
+// ===============================
+// 1. PESERTA PER KATEGORI
+// ===============================
+
+const byCategory = countBy(list, "category");
+
+// ===============================
+// 2. UKURAN JERSEY
+// ===============================
+
+const byJersey = countBy(list, "jersey_size");
+
+// ===============================
+// 3. STATUS PEMBAYARAN & PENDAPATAN
+// ===============================
+
+const byPaymentStatus = countBy(list, "payment_status");
+
+const revenueByMethod = list
+  .filter((p: any) => p.payment_status === "Lunas")
+  .reduce((acc: Record<string, number>, item: any) => {
+    const method = item.payment_method || "Lainnya";
+    acc[method] = (acc[method] || 0) + Number(item.price || 0);
+    return acc;
+  }, {} as Record<string, number>);
+
+const totalRevenue: number = Object.values(revenueByMethod).reduce(
+  (sum: number, val: number) => sum + val,
+  0
+);
+
+// ===============================
+// 4. JENIS KELAMIN
+// ===============================
+
+const byGender = countBy(list, "gender");
+
+// ===============================
+// 5. GOLONGAN DARAH
+// ===============================
+
+const byBloodType = countBy(list, "blood_type");
+
+// ===============================
+// 6. TREN PENDAFTARAN HARIAN
+// ===============================
+
+const byDate = list.reduce((acc: Record<string, number>, item: any) => {
+  if (!item.created_at) return acc;
+  const date = new Date(item.created_at).toISOString().slice(0, 10);
+  acc[date] = (acc[date] || 0) + 1;
+  return acc;
+}, {});
+
+const sortedDates = Object.keys(byDate).sort();
+const trendLabels = sortedDates;
+const trendValues = sortedDates.map((d) => byDate[d]);
+---
+
+<AdminLayout title="Statistik">
+
+        <AdminNavbar />
+
+        <div class="dashboard-header">
+            <h1>Statistik</h1>
+        </div>
+
+        <section class="stats-grid">
+
+            <div class="table-card">
+                <h2>Peserta per Kategori</h2>
+                <div class="chart-box">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <h2>Ukuran Jersey</h2>
+                <div class="chart-box">
+                    <canvas id="jerseyChart"></canvas>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <h2>Status Pembayaran</h2>
+                <div class="chart-box">
+                    <canvas id="paymentChart"></canvas>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <h2>Jenis Kelamin</h2>
+                <div class="chart-box">
+                    <canvas id="genderChart"></canvas>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <h2>Golongan Darah</h2>
+                <div class="chart-box">
+                    <canvas id="bloodChart"></canvas>
+                </div>
+            </div>
+
+            <div class="table-card wide">
+                <h2>Tren Pendaftaran Harian</h2>
+                <div class="chart-box">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="table-card">
+            <h2>Ringkasan Pendapatan per Metode</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metode Pembayaran</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.entries(revenueByMethod).map(([method, total]) => (
+                        <tr>
+                            <td>{method}</td>
+                            <td>Rp {total.toLocaleString("id-ID")}</td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td><strong>Total Keseluruhan</strong></td>
+                        <td><strong>Rp {totalRevenue.toLocaleString("id-ID")}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+</AdminLayout>
+
+<script
+    define:vars={{
+        byCategory,
+        byJersey,
+        byPaymentStatus,
+        byGender,
+        byBloodType,
+        trendLabels,
+        trendValues,
+    }}
+>
+
+import Chart from "chart.js/auto";
+
+function makeBarChart(id, labelsData, title) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    new Chart(el, {
+        type: "bar",
+        data: {
+            labels: Object.keys(labelsData),
+            datasets: [
+                {
+                    label: title,
+                    data: Object.values(labelsData),
+                    backgroundColor: "#2E7D32",
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+        },
+    });
+}
+
+function makePieChart(id, labelsData) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    new Chart(el, {
+        type: "doughnut",
+        data: {
+            labels: Object.keys(labelsData),
+            datasets: [
+                {
+                    data: Object.values(labelsData),
+                    backgroundColor: [
+                        "#2E7D32",
+                        "#FB8C00",
+                        "#1565C0",
+                        "#C62828",
+                        "#6A1B9A",
+                    ],
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } } },
+        },
+    });
+}
+
+makeBarChart("categoryChart", byCategory, "Peserta");
+makeBarChart("jerseyChart", byJersey, "Jumlah");
+makePieChart("paymentChart", byPaymentStatus);
+makePieChart("genderChart", byGender);
+makePieChart("bloodChart", byBloodType);
+
+const trendEl = document.getElementById("trendChart");
+if (trendEl) {
+    new Chart(trendEl, {
+        type: "line",
+        data: {
+            labels: trendLabels,
+            datasets: [
+                {
+                    label: "Pendaftar per Hari",
+                    data: trendValues,
+                    borderColor: "#2E7D32",
+                    backgroundColor: "rgba(46,125,50,0.1)",
+                    fill: true,
+                    tension: 0.3,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+        },
+    });
+}
+
+</script>
+
+<style>
+  .dashboard-header {
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1b1b1b;
+    margin: 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .stats-grid .wide {
+    grid-column: 1 / -1;
+  }
+
+  .table-card h2 {
+    font-size: 14px;
+  }
+
+  .chart-box {
+    position: relative;
+    height: 200px;
+    width: 100%;
+  }
+
+  .stats-grid .wide .chart-box {
+    height: 220px;
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

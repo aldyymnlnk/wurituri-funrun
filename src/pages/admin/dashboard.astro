@@ -1,0 +1,264 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+import { supabase } from "../../lib/supabase";
+import AdminChart from "../../components/admin/AdminChart.astro";
+
+// ===============================
+// TOTAL PESERTA
+// ===============================
+
+const { count: totalPeserta } = await supabase
+  .from("participants")
+  .select("*", {
+    count: "exact",
+    head: true,
+  });
+
+// ===============================
+// SUDAH BAYAR
+// ===============================
+
+const { count: paid } = await supabase
+  .from("participants")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("payment_status", "Lunas");
+
+// ===============================
+// BELUM BAYAR
+// ===============================
+
+const { count: unpaid } = await supabase
+  .from("participants")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("payment_status", "Belum Bayar");
+
+// ===============================
+// PENDAPATAN
+// ===============================
+
+const { data: incomeData } = await supabase
+  .from("participants")
+  .select("price")
+  .eq("payment_status", "Lunas");
+
+const income =
+  incomeData?.reduce(
+    (sum, item) => sum + Number(item.price || 0),
+    0
+  ) || 0;
+
+// ===============================
+// DATA PESERTA
+// ===============================
+
+const { data: participants } = await supabase
+  .from("participants")
+  .select("*")
+  .order("id", { ascending: false });
+
+// ===============================
+// LINK GOOGLE SHEETS
+// ===============================
+
+const sheetUrl = import.meta.env.GOOGLE_SHEET_URL;
+
+---
+
+<AdminLayout title="Dashboard Admin">
+
+     <AdminNavbar />
+
+        <!-- =========================
+             HEADER + TOMBOL SHEETS
+        ========================== -->
+
+      <div class="dashboard-header">
+        <h1>Dashboard Admin</h1>
+       <a 
+        href={sheetUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-sheet"
+    >
+     📊 Buka Google Sheets
+      </a>
+    </div>
+
+        <!-- =========================
+             STATISTIK
+        ========================== -->
+
+        <section class="cards">
+            <AdminChart
+
+paid={paid}
+
+unpaid={unpaid}
+
+/>
+
+            <div class="card">
+
+                <h3>Total Peserta</h3>
+
+                <h1>{totalPeserta ?? 0}</h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Sudah Bayar</h3>
+
+                <h1>{paid ?? 0}</h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Belum Bayar</h3>
+
+                <h1>{unpaid ?? 0}</h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Pendapatan</h3>
+
+                <h1>Rp {income.toLocaleString("id-ID")}</h1>
+
+            </div>
+
+        </section>
+
+        <!-- =========================
+             TABEL PESERTA
+        ========================== -->
+
+        <section class="table-card">
+
+            <h2>Data Peserta</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Kode</th>
+
+                        <th>Nama</th>
+
+                        <th>Email</th>
+
+                        <th>Kategori</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {
+
+                        participants?.map((item) => (
+
+                            <tr>
+
+                                <td>
+
+                                    {item.participant_code}
+
+                                </td>
+
+                                <td>
+
+                                    {item.fullname}
+
+                                </td>
+
+                                <td>
+
+                                    {item.email}
+
+                                </td>
+
+                                <td>
+
+                                    {item.category}
+
+                                </td>
+
+                                <td>
+
+                                    {
+
+                                        item.payment_status === "Lunas"
+
+                                            ? "✅ Lunas"
+
+                                            : "🟡 Belum Bayar"
+
+                                    }
+
+                                </td>
+
+                            </tr>
+
+                        ))
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+
+</AdminLayout>
+
+<style>
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1b1b1b;
+    margin: 0;
+  }
+
+  .btn-sheet {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #2e7d32;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+  }
+
+  .btn-sheet:hover {
+    background: #256428;
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+const faqs = [
+  {
+    question: "Bagaimana cara mendaftar Waru Turi Fun Run?",
+    answer:
+      "Pilih kategori lomba, klik tombol Daftar Sekarang, isi data diri, kemudian lakukan pembayaran melalui link yang dikirim melalui WhatsApp."
+  },
+
+  {
+    question: "Bagaimana metode pembayarannya?",
+    answer:
+      "Setelah mengirim data pendaftaran melalui WhatsApp, admin akan mengirimkan link pembayaran. Setelah pembayaran berhasil, peserta akan memperoleh konfirmasi."
+  },
+
+  {
+    question: "Apa saja yang didapatkan peserta?",
+    answer:
+      "Setiap peserta memperoleh Race Pack berupa Jersey, BIB Number, Medali Finisher, Goodie Bag serta fasilitas Water Station sesuai kategori."
+  },
+
+  {
+    question: "Apakah peserta mendapatkan medali?",
+    answer:
+      "Ya. Semua peserta yang berhasil menyelesaikan lomba sesuai Cut Off Time (COT) akan mendapatkan Medali Finisher."
+  },
+
+  {
+    question: "Kapan Race Pack Collection?",
+    answer:
+      "Informasi Race Pack Collection akan diumumkan melalui WhatsApp dan Instagram resmi Waru Turi Fun Run."
+  },
+
+  {
+    question: "Apakah pendaftaran bisa dibatalkan?",
+    answer:
+      "Pendaftaran yang sudah melakukan pembayaran tidak dapat dibatalkan maupun dikembalikan dananya."
+  }
+
+];
+---
+
+<section class="faq" id="faq">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-badge">
+                ❓ FAQ
+            </span>
+
+            <h2>Pertanyaan yang Sering Ditanyakan</h2>
+
+            <p>
+                Temukan jawaban dari pertanyaan yang paling sering diajukan peserta.
+            </p>
+
+        </div>
+
+        <div class="faq-list">
+
+            {
+                faqs.map((faq)=>(
+
+                    <details class="faq-item">
+
+                        <summary>
+
+                            {faq.question}
+
+                        </summary>
+
+                        <p>
+
+                            {faq.answer}
+
+                        </p>
+
+                    </details>
+
+                ))
+            }
+
+        </div>
+
+    </div>
+
+</section>

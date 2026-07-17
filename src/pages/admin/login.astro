@@ -1,0 +1,178 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Login Admin" auth={true}>
+
+
+    <main class="login-page">
+
+
+        <div class="login-card">
+
+
+            <h1>
+                Admin Login
+            </h1>
+
+
+            <form id="loginForm">
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Masukkan Email"
+                        required
+                    />
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Masukkan Password"
+                        required
+                    />
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    Login
+                </button>
+
+
+
+                <p id="error"></p>
+
+
+            </form>
+
+
+        </div>
+
+
+    </main>
+
+
+</AdminLayout>
+
+
+
+<script>
+
+const form = document.getElementById("loginForm");
+
+const error =
+document.getElementById("error");
+
+
+
+if(form instanceof HTMLFormElement){
+
+
+    form.addEventListener(
+        "submit",
+        async (e)=>{
+
+
+            e.preventDefault();
+
+
+
+            const emailInput =
+            document.getElementById("email");
+
+
+            const passwordInput =
+            document.getElementById("password");
+
+
+
+            if(
+                !(emailInput instanceof HTMLInputElement) ||
+                !(passwordInput instanceof HTMLInputElement)
+            ){
+
+                return;
+
+            }
+
+
+
+            const email =
+            emailInput.value.trim();
+
+
+            const password =
+            passwordInput.value;
+
+
+
+            // LOGIN SEMENTARA
+
+            if(
+                email === "admin@waruturi.com" &&
+                password === "admin123"
+            ){
+
+
+                // membuat session admin
+
+                await fetch("/api/login",{
+
+                    method:"POST"
+
+                });
+
+
+
+                // pindah dashboard
+
+                window.location.href =
+                "/admin/dashboard";
+
+
+            }
+
+
+            else{
+
+
+                if(error){
+
+                    error.textContent =
+                    "Email atau Password salah!";
+
+                }
+
+
+            }
+
+
+        }
+    );
+
+
+}
+
+</script>

@@ -1,0 +1,770 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+// Supabase project credentials.
+// Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY in your .env file.
+const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+
+const categories = {
+  "5K": { title: "5K Fun Run", price: 169000, image: "/images/5k.jpg" },
+  "10K": { title: "10K Challenge", price: 199000, image: "/images/10k.jpg" },
+};
+
+const included = [
+  "Race Jersey",
+  "Finisher Medal",
+  "BIB Number",
+  "Goodie Bag",
+  "Water Station",
+];
+
+const banks = [
+  { code: "BRI", name: "Bank BRI", number: "123456789012345", holder: "Panitia Waru Turi Fun Run" },
+  { code: "BCA", name: "Bank BCA", number: "9876543210", holder: "Panitia Waru Turi Fun Run" },
+  { code: "MANDIRI", name: "Bank Mandiri", number: "1300009998887", holder: "Panitia Waru Turi Fun Run" },
+];
+---
+
+<MainLayout title="Register - Waru Turi Fun Run 2026">
+
+  <section class="register-page">
+    <div class="container">
+
+      <div class="register-header">
+        <span class="eyebrow">Waru Turi Fun Run 2026</span>
+        <h1>Registrasi Peserta</h1>
+        <p>Lengkapi data di bawah ini untuk mengikuti Waru Turi Fun Run 2026.</p>
+      </div>
+
+      <div class="register-grid">
+
+        <!-- FORM -->
+        <div class="register-form">
+          <form id="registerForm" novalidate>
+
+            <h2><span class="step-num">01</span> Data Peserta</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fullname">Nama Lengkap</label>
+                <input id="fullname" name="fullname" type="text" placeholder="Masukkan nama lengkap" autocomplete="name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="email@gmail.com" autocomplete="email" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Nomor WhatsApp</label>
+                <input id="phone" name="phone" type="tel" placeholder="08xxxxxxxxxx" pattern="[0-9]{9,15}" autocomplete="tel" required>
+              </div>
+
+              <div class="form-group">
+                <label for="birth_date">Tanggal Lahir</label>
+                <input id="birth_date" name="birth_date" type="date" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="gender">Jenis Kelamin</label>
+                <select id="gender" name="gender" required>
+                  <option value="" disabled selected>Pilih jenis kelamin</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="blood_type">Golongan Darah</label>
+                <select id="blood_type" name="blood_type" required>
+                  <option value="" disabled selected>Pilih golongan darah</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="AB">AB</option>
+                  <option value="O">O</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="category">Kategori</label>
+                <select id="category" name="category" required>
+                  <option value="5K">5K Fun Run</option>
+                  <option value="10K">10K Challenge</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="jersey_size">Ukuran Jersey</label>
+                <select id="jersey_size" name="jersey_size" required>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+              </div>
+            </div>
+
+            <h2><span class="step-num">02</span> Kontak Darurat</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="emergencyName">Nama</label>
+                <input id="emergencyName" name="emergencyName" type="text" placeholder="Nama kontak darurat" required>
+              </div>
+
+              <div class="form-group">
+                <label for="emergencyPhone">No HP</label>
+                <input id="emergencyPhone" name="emergencyPhone" type="tel" placeholder="08xxxxxxxxxx" pattern="[0-9]{9,15}" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="relationship">Hubungan</label>
+              <input id="relationship" name="relationship" type="text" placeholder="Contoh : Orang Tua" required>
+            </div>
+
+            <h2><span class="step-num">03</span> Pembayaran</h2>
+
+            <div class="bank-options" id="bankOptions">
+              {banks.map((bank, i) => (
+                <div
+                  class={`bank-option ${i === 0 ? "active" : ""}`}
+                  data-bank={bank.code}
+                  data-number={bank.number}
+                  data-holder={bank.holder}
+                  role="button"
+                  tabindex="0"
+                >
+                  <span class="bank-name">{bank.name}</span>
+                  <span class="bank-check" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
+
+            <div class="rekening-box">
+              <div class="rekening-info">
+                <span class="rekening-label">Nomor Rekening</span>
+                <span class="rekening-number" id="rekeningNumber">{banks[0].number}</span>
+                <span class="rekening-holder" id="rekeningHolder">a.n. {banks[0].holder}</span>
+              </div>
+              <button type="button" class="copy-btn" id="copyRekening">Salin</button>
+            </div>
+
+            <label class="checkbox" for="agreement">
+              <input id="agreement" name="agreement" type="checkbox">
+              <span>Saya menyetujui syarat dan ketentuan yang berlaku.</span>
+            </label>
+
+            <button class="submit-btn" id="submitBtn" type="submit">
+              <span class="btn-label">Daftar Sekarang</span>
+            </button>
+
+            <p class="form-status" id="formStatus" role="status"></p>
+
+          </form>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="register-sidebar">
+          <div class="summary-card">
+            <span class="eyebrow eyebrow-dark">Ringkasan</span>
+
+            <img id="categoryImage" src={categories["5K"].image} alt={categories["5K"].title}>
+
+            <h3 id="categoryTitle">{categories["5K"].title}</h3>
+            <p class="price" id="categoryPrice">Rp{categories["5K"].price.toLocaleString("id-ID")}</p>
+
+            <ul class="include-list">
+              {included.map((item) => (
+                <li>✔ {item}</li>
+              ))}
+            </ul>
+
+            <button type="button" class="wa-btn" id="whatsappButton">
+              Bayar Setelah Daftar
+            </button>
+
+            <p class="sidebar-note">
+              Bukti transfer dikirim via WhatsApp setelah kamu menekan
+              "Daftar Sekarang" dan menyelesaikan pembayaran.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</MainLayout>
+
+<style>
+  :root {
+    --ink: #17181c;
+    --paper: #f7f6f3;
+    --accent: #ff5a1f;
+    --accent-dim: #ffe0d0;
+    --line: #26272c;
+    --track: #e7e4dd;
+    --ok: #1f8a4c;
+    --danger: #c4372f;
+  }
+
+  .register-page {
+    background: var(--paper);
+    padding: 64px 0 96px;
+    color: var(--ink);
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .register-header {
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .register-header h1 {
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.05;
+    margin: 0 0 12px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .register-header p {
+    color: #55575e;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .register-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .register-form {
+    background: #fff;
+    border: 1px solid var(--track);
+    border-radius: 18px;
+    padding: 36px;
+  }
+
+  .register-form h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 32px 0 18px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--track);
+  }
+
+  .register-form h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .step-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--ink);
+    border-radius: 999px;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #33343a;
+  }
+
+  input,
+  select {
+    font: inherit;
+    padding: 12px 14px;
+    border: 1px solid var(--track);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--ink);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  input::placeholder {
+    color: #a3a3a3;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  .bank-option:focus-visible,
+  button:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  .bank-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .bank-option {
+    border: 1px solid var(--track);
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .bank-option:hover {
+    border-color: #cfcfc9;
+  }
+
+  .bank-option.active {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .bank-check {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--track);
+  }
+
+  .bank-option.active .bank-check {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  .rekening-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 24px;
+  }
+
+  .rekening-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rekening-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #b8b9bd;
+  }
+
+  .rekening-number {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .rekening-holder {
+    font-size: 12px;
+    color: #b8b9bd;
+  }
+
+  .copy-btn {
+    flex-shrink: 0;
+    background: #fff;
+    color: var(--ink);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .copy-btn:hover {
+    background: var(--accent-dim);
+  }
+
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #45464c;
+    margin-bottom: 22px;
+    cursor: pointer;
+  }
+
+  .checkbox input {
+    margin-top: 3px;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent);
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-status {
+    min-height: 20px;
+    font-size: 13px;
+    text-align: center;
+    margin: 12px 0 0;
+    font-weight: 600;
+  }
+
+  .form-status.error { color: var(--danger); }
+  .form-status.success { color: var(--ok); }
+
+  .register-sidebar {
+    position: sticky;
+    top: 24px;
+  }
+
+  .summary-card {
+    background: var(--ink);
+    color: #fff;
+    border-radius: 18px;
+    padding: 28px;
+  }
+
+  .eyebrow-dark {
+    color: #ffb28f;
+  }
+
+  .summary-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 14px 0 16px;
+    background: #2b2c31;
+  }
+
+  .summary-card h3 {
+    font-size: 20px;
+    margin: 0 0 4px;
+  }
+
+  .price {
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0 0 18px;
+    color: var(--accent);
+  }
+
+  .include-list {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    color: #d8d9dc;
+  }
+
+  .wa-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    color: var(--ink);
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .sidebar-note {
+    font-size: 12px;
+    color: #9d9ea3;
+    margin: 14px 0 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 860px) {
+    .register-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .register-sidebar {
+      position: static;
+      order: -1;
+    }
+
+    .form-row,
+    .bank-options {
+      grid-template-columns: 1fr;
+    }
+
+    .register-form {
+      padding: 24px;
+    }
+  }
+</style>
+
+<script define:vars={{ categories, banks }} is:inline>
+  console.log("Register Script Loaded");
+
+  // ===============================
+  // ELEMENTS
+  // ===============================
+  const form = document.getElementById("registerForm");
+  const submitBtn = document.getElementById("submitBtn");
+  const formStatus = document.getElementById("formStatus");
+
+  const category = document.getElementById("category");
+  const image = document.getElementById("categoryImage");
+  const title = document.getElementById("categoryTitle");
+  const price = document.getElementById("categoryPrice");
+
+  const bankOptions = document.querySelectorAll(".bank-option");
+  const rekeningNumber = document.getElementById("rekeningNumber");
+  const rekeningHolder = document.getElementById("rekeningHolder");
+  const copyButton = document.getElementById("copyRekening");
+  const whatsappButton = document.getElementById("whatsappButton");
+  const agreement = document.getElementById("agreement");
+
+  // ===============================
+  // DEFAULT STATE
+  // ===============================
+  let selectedBank = banks[0].code;
+  let rekening = banks[0].number;
+  let rekeningOwner = banks[0].holder;
+  let harga = categories["5K"].price;
+
+  // ===============================
+  // UPDATE KATEGORI
+  // ===============================
+  function updateCategory() {
+    if (!category) return;
+    const info = categories[category.value] || categories["5K"];
+    image.src = info.image;
+    image.alt = info.title;
+    title.textContent = info.title;
+    price.textContent = "Rp" + info.price.toLocaleString("id-ID");
+    harga = info.price;
+  }
+
+  if (category) {
+    category.addEventListener("change", updateCategory);
+    updateCategory();
+  }
+
+  // ===============================
+  // PILIH BANK
+  // ===============================
+  function selectBank(item) {
+    bankOptions.forEach((b) => b.classList.remove("active"));
+    item.classList.add("active");
+
+    selectedBank = item.dataset.bank;
+    rekening = item.dataset.number;
+    rekeningOwner = item.dataset.holder;
+
+    rekeningNumber.textContent = rekening;
+    rekeningHolder.textContent = "a.n. " + rekeningOwner;
+  }
+
+  bankOptions.forEach((item) => {
+    item.addEventListener("click", () => selectBank(item));
+    item.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        selectBank(item);
+      }
+    });
+  });
+
+  // ===============================
+  // COPY REKENING
+  // ===============================
+  copyButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(rekening);
+    setStatus("Nomor rekening berhasil disalin.", "success");
+  });
+
+  // ===============================
+  // WA MANUAL
+  // ===============================
+  whatsappButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    setStatus("Silakan klik 'Daftar Sekarang' terlebih dahulu.", "error");
+  });
+
+  // ===============================
+  // HELPERS
+  // ===============================
+  function setStatus(message, type) {
+    formStatus.textContent = message;
+    formStatus.className = "form-status" + (type ? " " + type : "");
+  }
+
+  // ===============================
+  // SUBMIT FORM
+  // ===============================
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (!agreement.checked) {
+      setStatus("Silakan menyetujui syarat dan ketentuan.", "error");
+      return;
+    }
+
+    const data = {
+      fullname: document.getElementById("fullname").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      birth_date: document.getElementById("birth_date").value,
+      gender: document.getElementById("gender").value,
+      category: category.value,
+      jersey_size: document.getElementById("jersey_size").value,
+      blood_type: document.getElementById("blood_type").value,
+      emergency_name: document.getElementById("emergencyName").value.trim(),
+      emergency_phone: document.getElementById("emergencyPhone").value.trim(),
+      emergency_relation: document.getElementById("relationship").value.trim(),
+      payment_method: selectedBank,
+      price: harga,
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.querySelector(".btn-label").textContent = "Memproses...";
+    setStatus("Mengirim data pendaftaran...", "");
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!result.success) {
+        console.error(result.message);
+        setStatus("Pendaftaran gagal: " + result.message, "error");
+        submitBtn.disabled = false;
+        submitBtn.querySelector(".btn-label").textContent = "Daftar Sekarang";
+        return;
+      }
+
+      setStatus("Pendaftaran berhasil! Mengarahkan ke WhatsApp...", "success");
+
+      const wave = "\u{1F44B}";
+      const divider = "\u2500".repeat(18);
+
+      const message = [
+        `Halo Admin Waru Turi Fun Run ${wave}`,
+        "",
+        "Saya telah melakukan pendaftaran.",
+        "",
+        divider,
+        `Nama : ${data.fullname}`,
+        `Kategori : ${categories[data.category].title}`,
+        `Nomor HP : ${data.phone}`,
+        `Bank : ${selectedBank}`,
+        `Nominal : Rp${harga.toLocaleString("id-ID")}`,
+        `Kode Peserta : ${result.participantCode}`,
+        divider,
+        "",
+        "Berikut saya lampirkan bukti transfer.",
+        "Terima kasih.",
+      ].join("\n");
+
+      window.open(
+        "https://wa.me/6282113866887?text=" + encodeURIComponent(message),
+        "_blank"
+      );
+
+      form.reset();
+      updateCategory();
+      selectBank(document.querySelector(".bank-option"));
+    } catch (err) {
+      console.error(err);
+      setStatus("Terjadi kesalahan server. Coba lagi.", "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.querySelector(".btn-label").textContent = "Daftar Sekarang";
+    }
+  });
+</script>

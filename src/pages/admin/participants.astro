@@ -1,0 +1,267 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+
+import { supabase } from "../../lib/supabase";
+
+// ===============================
+// Ambil Data Peserta
+// ===============================
+
+const { data: participants, error } = await supabase
+  .from("participants")
+  .select("*")
+  .order("created_at", { ascending: false });
+
+if (error) {
+  console.error(error);
+}
+---
+
+<AdminLayout title="Data Peserta">
+
+
+        <AdminNavbar />
+
+        <section class="table-card">
+
+            <div class="search-box">
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="🔍 Cari nama peserta..."
+                />
+
+                <select id="filterCategory">
+
+                    <option value="">
+                        Semua Kategori
+                    </option>
+
+                    <option value="5K Fun Run">
+                        5K Fun Run
+                    </option>
+
+                    <option value="10K Challenge">
+                        10K Challenge
+                    </option>
+
+                </select>
+
+            </div>
+
+            <h2>Daftar Peserta</h2>
+
+            <table id="participantTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+
+                        <th>Kode</th>
+
+                        <th>Nama</th>
+
+                        <th>Email</th>
+
+                        <th>No. WhatsApp</th>
+
+                        <th>Kategori</th>
+
+                        <th>Status</th>
+
+                        <th>Aksi</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {
+
+                    participants && participants.length > 0
+
+                    ? participants.map((item, index) => (
+
+                        <tr>
+
+                            <td>{index + 1}</td>
+
+                            <td>{item.participant_code}</td>
+
+                            <td>{item.fullname}</td>
+
+                            <td>{item.email}</td>
+
+                            <td>{item.phone}</td>
+
+                            <td>{item.category}</td>
+
+                            <td>
+
+                                {
+
+                                    item.payment_status === "Lunas"
+
+                                    ?
+
+                                    <span class="status-paid">
+
+                                        ✅ Lunas
+
+                                    </span>
+
+                                    :
+
+                                    <span class="status-unpaid">
+
+                                        🟡 Belum Bayar
+
+                                    </span>
+
+                                }
+
+                            </td>
+
+                            <td>
+                                                                <a
+                                    href={`/admin/edit/${item.id}`}
+                                    class="btn btn-warning"
+                                >
+                                    ✏ Edit
+                                </a>
+
+                                <form
+                                    action="/api/deleteParticipant"
+                                    method="POST"
+                                    style="display:inline-block;"
+                                    onsubmit="return confirm('Yakin ingin menghapus peserta ini?')"
+                                >
+
+                                    <input
+                                        type="hidden"
+                                        name="id"
+                                        value={item.id}
+                                    />
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-danger"
+                                    >
+                                        🗑 Hapus
+                                    </button>
+
+                                </form>
+
+                                {
+
+                                    item.payment_status !== "Lunas"
+
+                                    &&
+
+                                    <form
+                                        action="/api/updateParticipant"
+                                        method="POST"
+                                        style="display:inline-block;"
+                                    >
+
+                                        <input
+                                            type="hidden"
+                                            name="id"
+                                            value={item.id}
+                                        />
+
+                                        <input
+                                            type="hidden"
+                                            name="payment_status"
+                                            value="Lunas"
+                                        />
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success"
+                                        >
+                                            ✔ Verifikasi
+                                        </button>
+
+                                    </form>
+
+                                }
+
+                            </td>
+
+                        </tr>
+
+                    ))
+
+                    :
+
+                    (
+
+                        <tr>
+
+                            <td colspan="8" style="text-align:center;padding:35px;">
+
+                                Belum ada peserta yang mendaftar.
+
+                            </td>
+
+                        </tr>
+
+                    )
+
+                }
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+<script is:inline>
+
+const searchInput = document.getElementById("searchInput");
+
+const filterCategory = document.getElementById("filterCategory");
+
+const rows = document.querySelectorAll("#participantTable tbody tr");
+
+function filterTable(){
+
+const keyword = searchInput.value.toLowerCase();
+
+const category = filterCategory.value;
+
+rows.forEach((row)=>{
+
+const nama = row.children[2].textContent.toLowerCase();
+
+const kategori = row.children[5].textContent.trim();
+
+const cocokNama = nama.includes(keyword);
+
+const cocokKategori = category === "" || kategori === category;
+
+row.style.display = (cocokNama && cocokKategori)
+
+? ""
+
+: "none";
+
+});
+
+}
+
+searchInput.addEventListener("keyup",filterTable);
+
+filterCategory.addEventListener("change",filterTable);
+
+</script>
+
+</AdminLayout>
+ 

@@ -1,0 +1,206 @@
+---
+const categories = [
+  {
+    id: 1,
+    title: "5K",
+    subtitle: "Fun Run",
+    image: "/images/5k.jpg",
+    price: "Rp169.000",
+
+    benefits: [
+      "Medali Finisher",
+      "Jersey",
+      "BIB Number",
+      "Goodie Bag",
+    ],
+
+    route: {
+      title: "Rute 5K (Fun Run)",
+      description:
+        "Plan Route : Start (Lap. Bendungan Waru Turi)- Kantor Jasa Tirta - Jembatan Utama -Ujung Jembatan Utama ke Kanan - Jembatan Kedua ke Kiri - Patung Badak ke Kanan - Pintu Gerbang Waduk Sisi Barat ke Kiri – Simpang Tiga Jabon Gg 8 ke Kanan – Simpang Tiga 2 Jabon Gg 8 ke Kanan - Pintu Gerbang Waduk Sisi Barat – Jembatan Utama ke Kanan – Kantor Jasa Tirta - Finish",
+
+      start: "Bendung Gerak Waru Turi",
+      finish: "Bendung Gerak Waru Turi",
+      cot: "1 Jam 30 Menit",
+      water: "KM 2.5",
+    },
+  },
+
+  {
+    id: 2,
+    title: "10K",
+    subtitle: "Challenge",
+    image: "/images/10k.jpg",
+    price: "Rp199.000",
+
+    benefits: [
+      "Medali Finisher",
+      "Jersey",
+      "BIB Number",
+      "Goodie Bag",
+    ],
+
+    route: {
+      title: "Rute 10K (Challenge)",
+      description:
+        "Plan Route : Start (Lap. Bendungan Waru Turi)- Kantor Jasa Tirta -Jembatan Utama -Ujung Jembatan Utama ke Kanan - Jembatan Kedua ke Kiri - Patung Badak ke Kanan - Pintu Gerbang Waduk Sisi Barat Lurus - Perempatan Dusun Tanjung - Simpang Empat Desa Ngablak ke Kiri – Simpang Empat Kelurahan Dermo ke Kiri - Simpang Empat Jl. Merbabu Lurus – Jabon Gg 4 – Jabon Gg 5 - Simpang Tiga Jabon Gg 9 ke Kiri - Pintu Gerbang Waduk - Patung Badak ke Ke Kiri - Jembatan Kedua ke Kanan -Jembatan Utama - Area Food Court ke Kanan - Jembatan Kecil ke Kanan – Finish",
+
+      start: "Bendung Gerak Waru Turi",
+      finish: "Bendung Gerak Waru Turi",
+      cot: "2 Jam",
+      water: "KM 2.5 • KM 5 • KM 7.5",
+    },
+  },
+];
+---
+
+<section class="category" id="category">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-badge">
+                🏃 Race Category
+            </span>
+
+            <h2>Pilih Kategori Event</h2>
+
+            <p>
+                Pilih kategori sesuai kemampuanmu dan nikmati pengalaman terbaik di Waru Turi Fun Run.
+            </p>
+
+        </div>
+
+        <div class="category-grid">
+
+            {
+                categories.map((category)=>(
+
+                    <div class="category-card">
+
+                        <div class="image-wrapper">
+
+                            <img
+                                src={category.image}
+                                alt={category.title}
+                                class="category-image"
+                            />
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="header">
+
+                                <div>
+
+                                    <h2>{category.title}</h2>
+
+                                    <span class="subtitle">
+
+                                        {category.subtitle}
+
+                                    </span>
+
+                                </div>
+
+                                <span class="price">
+
+                                    {category.price}
+
+                                </span>
+
+                            </div>
+
+                            <div class="benefit">
+
+                                {
+                                    category.benefits.map((item)=>(
+
+                                        <div class="benefit-item">
+
+                                            <span>✔</span>
+
+                                            <p>{item}</p>
+
+                                        </div>
+
+                                    ))
+                                }
+
+                            </div>
+
+                            <div class="route">
+
+                                <h3>
+
+                                    {category.route.title}
+
+                                </h3>
+
+                                <p>
+
+                                    {category.route.description}
+
+                                </p>
+
+                            </div>
+
+                            <div class="info">
+
+                                <div class="info-box">
+
+                                    <strong>📍 Start</strong>
+
+                                    <span>{category.route.start}</span>
+
+                                </div>
+
+                                <div class="info-box">
+
+                                    <strong>🏁 Finish</strong>
+
+                                    <span>{category.route.finish}</span>
+
+                                </div>
+
+                                <div class="info-box">
+
+                                    <strong>⏱ COT</strong>
+
+                                    <span>{category.route.cot}</span>
+
+                                </div>
+
+                                <div class="info-box">
+
+                                    <strong>💧 Water Station</strong>
+
+                                    <span>{category.route.water}</span>
+
+                                </div>
+
+                            </div>
+
+                            <a
+                                href="/register"
+                                class="register-button"
+                            >
+
+                                Daftar Sekarang
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                ))
+            }
+
+        </div>
+
+    </div>
+
+</section>

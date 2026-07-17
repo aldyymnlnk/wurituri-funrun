@@ -1,0 +1,92 @@
+---
+const galleries = [
+
+    {
+        image: "/images/gallery1.jpeg",
+        title: "lokasi"
+    },
+
+    {
+        image: "/images/gallery2.jpeg",
+        title: "Start Event"
+    },
+
+    {
+        image: "/images/gallery3.jpeg",
+        title: "lokasi"
+    },
+
+    {
+        image: "/images/gallery4.jpeg",
+        title: "Peserta event"
+    }
+
+];
+---
+
+<section class="gallery" id="gallery">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-badge">
+
+                📸 Gallery
+
+            </span>
+
+            <h2>Dokumentasi Event</h2>
+
+            <p>
+
+                Momen terbaik Waru Turi Fun Run yang penuh semangat dan kebersamaan.
+
+            </p>
+
+        </div>
+
+        <div class="gallery-grid">
+
+            {
+
+                galleries.map((gallery) => (
+
+                    <div class="gallery-item">
+
+                        <img
+                            src={gallery.image}
+                            alt={gallery.title}
+                        />
+
+                        <div class="gallery-overlay">
+
+                            <h3>
+
+                                {gallery.title}
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                ))
+
+            }
+
+        </div>
+
+        <div class="gallery-button">
+
+            <a href="#">
+
+                Lihat Semua Foto
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>

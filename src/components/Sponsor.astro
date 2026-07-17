@@ -1,0 +1,67 @@
+---
+const sponsors = [
+  {
+    id: 1,
+    image: "/images/sponsor1.png",
+    name: "Sponsor 1",
+  },
+  {
+    id: 2,
+    image: "/images/sponsor2.png",
+    name: "Sponsor 2",
+  },
+  {
+    id: 3,
+    image: "/images/sponsor3.png",
+    name: "Sponsor 3",
+  },
+];
+---
+
+<section class="sponsor" id="sponsor">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-badge">
+                🤝 Our Sponsor
+            </span>
+
+            <h2>
+                Didukung Oleh
+            </h2>
+
+            <p>
+                Terima kasih kepada seluruh sponsor yang telah mendukung
+                terselenggaranya Waru Turi Fun Run 2026.
+            </p>
+
+        </div>
+
+        <div class="sponsor-slider">
+
+            <div class="sponsor-track">
+
+                {
+                    [...sponsors, ...sponsors].map((sponsor) => (
+
+                        <div class="sponsor-item">
+
+                            <img
+                                src={sponsor.image}
+                                alt={sponsor.name}
+                            />
+
+                        </div>
+
+                    ))
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

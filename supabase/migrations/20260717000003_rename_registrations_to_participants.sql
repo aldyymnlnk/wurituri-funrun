@@ -1,0 +1,1 @@
+alter table registrations rename to participants;

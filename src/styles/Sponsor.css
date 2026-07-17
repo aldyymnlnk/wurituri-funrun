@@ -1,0 +1,139 @@
+/* ===================================
+   SPONSOR
+=================================== */
+
+.sponsor{
+
+    padding:90px 0;
+
+    background:#fff;
+
+    overflow:hidden;
+
+}
+
+/* ===================================
+   SLIDER
+=================================== */
+
+.sponsor-slider{
+
+    width:100%;
+
+    overflow:hidden;
+
+    margin-top:55px;
+
+    position:relative;
+
+}
+
+.sponsor-track{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:70px;
+
+    width:max-content;
+
+    animation:scrollSponsor 18s linear infinite;
+
+}
+
+.sponsor-track:hover{
+
+    animation-play-state:paused;
+
+}
+
+/* ===================================
+   ITEM
+=================================== */
+
+.sponsor-item{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-width:180px;
+
+}
+
+.sponsor-item img{
+
+    width:140px;
+
+    height:70px;
+
+    object-fit:contain;
+
+    filter:grayscale(100%);
+
+    opacity:.8;
+
+    transition:.35s;
+
+}
+
+.sponsor-item img:hover{
+
+    filter:none;
+
+    opacity:1;
+
+    transform:scale(1.08);
+
+}
+
+/* ===================================
+   ANIMATION
+=================================== */
+
+@keyframes scrollSponsor{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-50%);
+
+    }
+
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:768px){
+
+    .sponsor-item{
+
+        min-width:120px;
+
+    }
+
+    .sponsor-item img{
+
+        width:100px;
+
+        height:55px;
+
+    }
+
+    .sponsor-track{
+
+        gap:45px;
+
+    }
+
+}

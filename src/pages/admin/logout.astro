@@ -1,0 +1,7 @@
+---
+import { supabase } from "../../lib/supabase";
+
+await supabase.auth.signOut();
+
+Astro.redirect("/admin/login");
+---

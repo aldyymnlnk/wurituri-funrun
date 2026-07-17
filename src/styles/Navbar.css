@@ -1,0 +1,267 @@
+/* ===================================
+   NAVBAR
+=================================== */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:999;
+
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(12px);
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+/* Container */
+
+.navbar-container{
+
+    width:90%;
+    max-width:1300px;
+
+    margin:auto;
+
+    height:90px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+/* ===================================
+   LOGO
+=================================== */
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+}
+
+.logo-image{
+
+    width:60px;
+    height:60px;
+
+    object-fit:contain;
+
+    transition:.3s;
+
+}
+
+.logo:hover .logo-image{
+
+    transform:scale(1.08);
+
+}
+
+.logo-text{
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+.logo-text h2{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#2E7D32;
+
+    line-height:1;
+
+}
+
+.logo-text span{
+
+    margin-top:4px;
+
+    font-size:13px;
+
+    color:#777;
+
+    letter-spacing:1px;
+
+}
+
+/* ===================================
+   MENU
+=================================== */
+
+.nav-menu{
+
+    display:flex;
+    align-items:center;
+    gap:35px;
+
+}
+
+.nav-menu a{
+
+    position:relative;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    color:#444;
+
+    transition:.3s;
+
+}
+
+.nav-menu a:hover{
+
+    color:#2E7D32;
+
+}
+
+.nav-menu a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    background:#2E7D32;
+
+    transition:.3s;
+
+}
+
+.nav-menu a:hover::after{
+
+    width:100%;
+
+}
+
+/* ===================================
+   BUTTON
+=================================== */
+
+.btn-register{
+
+    padding:13px 25px;
+
+    border-radius:10px;
+
+    background:linear-gradient(135deg,#2E7D32,#43A047);
+
+    color:#fff;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-register:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(46,125,50,.35);
+
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:992px){
+
+    .navbar-container{
+
+        width:95%;
+
+    }
+
+    .nav-menu{
+
+        gap:20px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .navbar{
+
+        position:relative;
+
+    }
+
+    .navbar-container{
+
+        height:auto;
+
+        padding:18px 0;
+
+        flex-direction:column;
+
+        gap:18px;
+
+    }
+
+    .logo{
+
+        justify-content:center;
+
+    }
+
+    .nav-menu{
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+        gap:18px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    .logo-image{
+
+        width:50px;
+        height:50px;
+
+    }
+
+    .logo-text h2{
+
+        font-size:20px;
+
+    }
+
+    .logo-text span{
+
+        font-size:12px;
+
+    }
+
+    .btn-register{
+
+        width:100%;
+
+        text-align:center;
+
+    }
+
+}

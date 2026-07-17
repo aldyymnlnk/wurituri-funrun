@@ -1,0 +1,74 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../../components/admin/AdminNavbar.astro";
+---
+
+<AdminLayout title="Tambah FAQ">
+
+<AdminSidebar />
+
+<main class="admin-content">
+
+<AdminNavbar />
+
+<section class="table-card">
+
+<h2>
+
+Tambah FAQ
+
+</h2>
+
+<form
+action="/api/addFaq"
+method="POST"
+>
+
+<div class="form-group">
+
+<label>
+
+Pertanyaan
+
+</label>
+
+<input
+type="text"
+name="question"
+required
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Jawaban
+
+</label>
+
+<textarea
+name="answer"
+rows="6"
+required
+></textarea>
+
+</div>
+
+<button
+class="btn btn-success"
+>
+
+💾 Simpan
+
+</button>
+
+</form>
+
+</section>
+
+</main>
+
+</AdminLayout>

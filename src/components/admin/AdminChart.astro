@@ -1,0 +1,57 @@
+---
+const { paid = 0, unpaid = 0 } = Astro.props;
+---
+
+<div class="table-card">
+
+    <h2>Status Pembayaran</h2>
+
+    <canvas id="paymentChart"></canvas>
+
+</div>
+
+<script define:vars={{ paid, unpaid }}>
+
+import Chart from "chart.js/auto";
+
+new Chart(document.getElementById("paymentChart"),{
+
+type:"doughnut",
+
+data:{
+
+labels:[
+
+"Lunas",
+
+"Belum Bayar"
+
+],
+
+datasets:[{
+
+data:[paid,unpaid]
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+plugins:{
+
+legend:{
+
+position:"bottom"
+
+}
+
+}
+
+}
+
+});
+
+</script>

@@ -1,0 +1,152 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/dashboard/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/edit/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/faq/add/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/faq/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/gallery/add/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/gallery/edit/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/gallery/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/login/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/logout/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/participants/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/payments/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/settings/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/sheets/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/sponsor/add/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/sponsor/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/statistics/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/addFaq/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/addGallery/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/addSponsor/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/deleteGallery/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/deleteParticipant/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/exportExcel/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/login/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/register/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/updateGallery/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/updateParticipant/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/updateSettings/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/api/verifyPayment/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/register/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/404/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/.*$",
+			"dest": "_render",
+			"status": 404
+		}
+	]
+}

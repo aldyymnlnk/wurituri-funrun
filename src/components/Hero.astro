@@ -1,0 +1,103 @@
+---
+import { supabase } from "../lib/supabase";
+
+const { data: settings } = await supabase
+    .from("settings")
+    .select("*")
+    .single();
+
+const eventName = settings?.event_name || "Waru Turi Fun Run";
+const eventDate = settings?.event_date
+    ? new Date(settings.event_date).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    })
+    : "Tanggal menyusul";
+const eventLocation = settings?.location || "Bendung Waru Turi, Kediri";
+---
+
+<section class="hero" id="home">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                🏃 Event Lari {eventName}
+            </span>
+
+            <h1>
+
+                Waru Turi
+                <span>Fun Run</span>
+
+            </h1>
+
+            <p>
+
+                Rasakan pengalaman berlari di {eventLocation}
+
+            </p>
+
+            <p>
+
+
+                bersama ribuan pelari dari seluruh Indonesia.
+
+            </p>
+
+
+            <div class="hero-button-group">
+
+                <a
+                    href="#category"
+                    class="btn-primary"
+                >
+                    Daftar Sekarang
+                </a>
+
+                <a
+                    href="#gallery"
+                    class="btn-secondary"
+                >
+                    Lihat Gallery
+                </a>
+
+            </div>
+
+            <div class="hero-info">
+
+                <div class="info-box">
+
+                    <h3>📅</h3>
+
+                    <span>{eventDate}</span>
+
+                </div>
+
+                <div class="info-box">
+
+                    <h3>📍</h3>
+
+                    <span>{eventLocation}</span>
+
+                </div>
+
+                <div class="info-box">
+
+                    <h3>🏅</h3>
+
+                    <span>5K & 10K</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

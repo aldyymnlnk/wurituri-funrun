@@ -1,0 +1,165 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+
+import { supabase } from "../../lib/supabase";
+
+const { data: sponsors } = await supabase
+.from("sponsor")
+.select("*")
+.order("created_at",{ascending:false});
+---
+
+<AdminLayout title="Sponsor">
+
+<AdminSidebar />
+
+<main class="admin-content">
+
+<AdminNavbar />
+
+<section class="table-card">
+
+<h2>
+
+Kelola Sponsor
+
+</h2>
+
+<div style="margin-bottom:20px;">
+
+<a
+href="/admin/sponsor/add"
+class="btn btn-success"
+>
+
++ Tambah Sponsor
+
+</a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Logo</th>
+
+<th>Nama</th>
+
+<th>Website</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{
+
+sponsors && sponsors.length>0
+
+?
+
+sponsors.map((item,index)=>(
+
+<tr>
+
+<td>{index+1}</td>
+
+<td>
+
+<img
+src={item.image}
+width="120"
+/>
+
+</td>
+
+<td>
+
+{item.name}
+
+</td>
+
+<td>
+
+{item.website}
+
+</td>
+
+<td>
+
+<a
+href={`/admin/sponsor/edit/${item.id}`}
+class="btn btn-warning"
+>
+
+✏ Edit
+
+</a>
+
+<form
+action="/api/deleteSponsor"
+method="POST"
+style="display:inline-block;"
+onsubmit="return confirm('Hapus sponsor?')"
+>
+
+<input
+type="hidden"
+name="id"
+value={item.id}
+/>
+
+<button
+class="btn btn-danger"
+type="submit"
+>
+
+🗑 Hapus
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+))
+
+:
+
+(
+
+<tr>
+
+<td colspan="5" style="text-align:center;">
+
+Belum ada sponsor.
+
+</td>
+
+</tr>
+
+)
+
+}
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+</AdminLayout>

@@ -1,0 +1,740 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Register - Waru Turi Fun Run 2026">
+
+<section class="register-page">
+
+    <div class="container">
+
+        <!-- ===========================
+             HEADER
+        ============================ -->
+
+        <div class="register-header">
+
+            <span class="section-badge">
+
+                🏃 Registrasi Peserta
+
+            </span>
+
+            <h1>
+
+                Waru Turi Fun Run 2026
+
+            </h1>
+
+            <p>
+
+                Lengkapi data peserta sebelum melakukan pembayaran.
+
+            </p>
+
+        </div>
+
+        <!-- ===========================
+             CONTENT
+        ============================ -->
+
+        <div class="register-grid">
+
+            <!-- ===========================
+                 FORM
+            ============================ -->
+
+            <div class="register-form">
+
+                <form id="registerForm">
+
+                    <h2>
+
+                        Data Peserta
+
+                    </h2>
+
+                    <!-- Nama -->
+
+                    <div class="form-group">
+
+                        <label for="fullname">
+
+                            Nama Lengkap
+
+                        </label>
+
+                        <input
+                            id="fullname"
+                            name="fullname"
+                            type="text"
+                            placeholder="Masukkan Nama Lengkap"
+                            required
+                        />
+
+                    </div>
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+
+                            Email
+
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="email@gmail.com"
+                            required
+                        />
+
+                    </div>
+
+                    <!-- Nomor HP -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+
+                            Nomor WhatsApp
+
+                        </label>
+
+                        <input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="08xxxxxxxxxx"
+                            required
+                        />
+
+                    </div>
+
+                    <!-- Tanggal Lahir -->
+
+                    <div class="form-group">
+
+                        <label for="birth_date">
+
+                            Tanggal Lahir
+
+                        </label>
+
+                        <input
+                            id="birth_date"
+                            name="birth_date"
+                            type="date"
+                            required
+                        />
+
+                    </div>
+
+                    <!-- Gender -->
+
+                    <div class="form-group">
+
+                        <label for="gender">
+
+                            Jenis Kelamin
+
+                        </label>
+
+                        <select
+                            id="gender"
+                            name="gender"
+                            required
+                        >
+
+                            <option value="Laki-laki">
+
+                                Laki-laki
+
+                            </option>
+
+                            <option value="Perempuan">
+
+                                Perempuan
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Kategori -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+
+                            Kategori Lari
+
+                        </label>
+
+                        <select
+                            id="category"
+                            name="category"
+                        >
+
+                            <option value="5K">
+
+                                5K Fun Run
+
+                            </option>
+
+                            <option value="10K">
+
+                                10K Challenge
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Jersey -->
+
+                    <div class="form-group">
+
+                        <label for="jersey_size">
+
+                            Ukuran Jersey
+
+                        </label>
+
+                        <select
+                            id="jersey_size"
+                            name="jersey_size"
+                        >
+
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Golongan Darah -->
+
+                    <div class="form-group">
+
+                        <label for="blood_type">
+
+                            Golongan Darah
+
+                        </label>
+
+                        <select
+                            id="blood_type"
+                            name="blood_type"
+                        >
+
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                            <option value="O">O</option>
+
+                        </select>
+
+                    </div>
+                                        <!-- ===========================
+                         KONTAK DARURAT
+                    ============================ -->
+
+                    <h2 class="section-form">
+
+                        Kontak Darurat
+
+                    </h2>
+
+                    <div class="form-group">
+
+                        <label for="emergencyName">
+
+                            Nama Kontak
+
+                        </label>
+
+                        <input
+                            id="emergencyName"
+                            name="emergency_name"
+                            type="text"
+                            placeholder="Nama Orang Tua / Saudara"
+                        />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="emergencyPhone">
+
+                            Nomor HP
+
+                        </label>
+
+                        <input
+                            id="emergencyPhone"
+                            name="emergency_phone"
+                            type="tel"
+                            placeholder="08xxxxxxxxxx"
+                        />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="relationship">
+
+                            Hubungan
+
+                        </label>
+
+                        <input
+                            id="relationship"
+                            name="emergency_relation"
+                            type="text"
+                            placeholder="Contoh : Orang Tua"
+                        />
+
+                    </div>
+
+                    <!-- ===========================
+                         PERSETUJUAN
+                    ============================ -->
+
+                    <div class="checkbox">
+
+                        <input
+                            id="agreement"
+                            type="checkbox"
+                            required
+                        />
+
+                        <label for="agreement">
+
+                            Saya menyetujui seluruh syarat dan ketentuan
+                            Waru Turi Fun Run 2026.
+
+                        </label>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+
+                        Daftar Sekarang
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- ===========================
+                 SIDEBAR
+            ============================ -->
+
+            <div class="register-sidebar">
+
+                <!-- Ringkasan -->
+
+                <div class="summary-card">
+
+                    <h2>
+
+                        Ringkasan Pendaftaran
+
+                    </h2>
+
+                    <img
+                        id="categoryImage"
+                        src="/images/5k.jpg"
+                        alt="Kategori Lari"
+                    />
+
+                    <h3 id="categoryTitle">
+
+                        5K Fun Run
+
+                    </h3>
+
+                    <h1 id="categoryPrice">
+
+                        Rp169.000
+
+                    </h1>
+
+                    <ul>
+
+                        <li>✔ Race Jersey</li>
+
+                        <li>✔ Finisher Medal</li>
+
+                        <li>✔ BIB Number</li>
+
+                        <li>✔ Goodie Bag</li>
+
+                        <li>✔ Water Station</li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Pembayaran -->
+
+                <div class="payment-card">
+
+                    <h2>
+
+                        Pembayaran
+
+                    </h2>
+
+                    <p>
+
+                        Silakan transfer sesuai nominal ke salah satu rekening berikut.
+
+                    </p>
+
+                    <!-- BRI -->
+
+                    <div
+                        class="bank-option active"
+                        data-bank="BRI"
+                        data-number="123456789012345"
+                    >
+
+                        <strong>🏦 Bank BRI</strong>
+
+                        <p>123456789012345</p>
+
+                        <small>a.n Waru Turi Fun Run</small>
+
+                    </div>
+
+                    <!-- BCA -->
+
+                    <div
+                        class="bank-option"
+                        data-bank="BCA"
+                        data-number="987654321098765"
+                    >
+
+                        <strong>🏦 Bank BCA</strong>
+
+                        <p>987654321098765</p>
+
+                        <small>a.n Waru Turi Fun Run</small>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="copyRekening"
+                        class="copy-btn"
+                    >
+
+                        📋 Salin Nomor Rekening
+
+                    </button>
+
+                    <a
+                        href="#"
+                        id="whatsappButton"
+                        class="wa-btn"
+                    >
+
+                        💬 Konfirmasi via WhatsApp
+
+                    </a>
+
+                </div>
+
+                <!-- Informasi -->
+
+                <div class="payment-info">
+
+                    <h3>
+
+                        Cara Pembayaran
+
+                    </h3>
+
+                    <ol>
+
+                        <li>Isi formulir pendaftaran.</li>
+
+                        <li>Pilih rekening tujuan.</li>
+
+                        <li>Transfer sesuai nominal.</li>
+
+                        <li>Klik Daftar Sekarang.</li>
+
+                        <li>Kirim bukti transfer melalui WhatsApp.</li>
+
+                        <li>Admin akan melakukan verifikasi pembayaran.</li>
+
+                    </ol>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<script is:inline>
+
+console.log("Register Script Loaded");
+
+// ===============================
+// ELEMENT
+// ===============================
+
+const form = document.getElementById("registerForm");
+
+const category = document.getElementById("category");
+const image = document.getElementById("categoryImage");
+const title = document.getElementById("categoryTitle");
+const price = document.getElementById("categoryPrice");
+
+const bankOptions = document.querySelectorAll(".bank-option");
+
+const copyButton = document.getElementById("copyRekening");
+
+const whatsappButton = document.getElementById("whatsappButton");
+
+// ===============================
+// DEFAULT
+// ===============================
+
+let selectedBank = "BRI";
+
+let rekening = "123456789012345";
+
+let harga = 169000;
+
+// ===============================
+// UPDATE KATEGORI
+// ===============================
+
+function updateCategory(){
+
+    if(category.value === "5K"){
+
+        image.src="/images/5k.jpg";
+
+        title.textContent="5K Fun Run";
+
+        price.textContent="Rp169.000";
+
+        harga=169000;
+
+    }else{
+
+        image.src="/images/10k.jpg";
+
+        title.textContent="10K Challenge";
+
+        price.textContent="Rp199.000";
+
+        harga=199000;
+
+    }
+
+}
+
+category.addEventListener("change",updateCategory);
+
+updateCategory();
+
+// ===============================
+// PILIH BANK
+// ===============================
+
+bankOptions.forEach((item)=>{
+
+    item.addEventListener("click",()=>{
+
+        bankOptions.forEach((b)=>{
+
+            b.classList.remove("active");
+
+        });
+
+        item.classList.add("active");
+
+        selectedBank=item.dataset.bank;
+
+        rekening=item.dataset.number;
+
+    });
+
+});
+
+// ===============================
+// COPY REKENING
+// ===============================
+
+copyButton.addEventListener("click",()=>{
+
+    navigator.clipboard.writeText(rekening);
+
+    alert("Nomor rekening berhasil disalin.");
+
+});
+
+// ===============================
+// WA MANUAL
+// ===============================
+
+whatsappButton.addEventListener("click",(e)=>{
+
+    e.preventDefault();
+
+    alert("Silakan klik 'Daftar Sekarang' terlebih dahulu.");
+
+});
+
+// ===============================
+// SUBMIT FORM
+// ===============================
+
+form.addEventListener("submit",async(e)=>{
+
+    e.preventDefault();
+
+    const agreement=document.getElementById("agreement");
+
+    if(!agreement.checked){
+
+        alert("Silakan menyetujui syarat dan ketentuan.");
+
+        return;
+
+    }
+
+    const data={
+
+        fullname:document.getElementById("fullname").value,
+
+        email:document.getElementById("email").value,
+
+        phone:document.getElementById("phone").value,
+
+        birth_date:document.getElementById("birth_date").value,
+
+        gender:document.getElementById("gender").value,
+
+        category:document.getElementById("category").value,
+
+        jersey_size:document.getElementById("jersey_size").value,
+
+        blood_type:document.getElementById("blood_type").value,
+
+        emergency_name:document.getElementById("emergencyName").value,
+
+        emergency_phone:document.getElementById("emergencyPhone").value,
+
+        emergency_relation:document.getElementById("relationship").value,
+
+        payment_method:selectedBank,
+
+        price:harga
+
+    };
+
+    console.log(data);
+
+    try{
+
+        const response=await fetch("/api/register",{
+
+            method:"POST",
+
+            headers:{
+
+                "Content-Type":"application/json"
+
+            },
+
+            body:JSON.stringify(data)
+
+        });
+
+        const result=await response.json();
+
+        console.log(result);
+
+        if(!result.success){
+
+            alert(result.message);
+
+            return;
+
+        }
+
+        alert("Pendaftaran berhasil!");
+
+        const message=`Halo Admin Waru Turi Fun Run 👋
+
+Saya telah melakukan pendaftaran.
+
+━━━━━━━━━━━━━━━━━━
+
+Nama : ${data.fullname}
+
+Kategori : ${data.category}
+
+Nomor HP : ${data.phone}
+
+Bank : ${selectedBank}
+
+Nominal : Rp${harga.toLocaleString("id-ID")}
+
+Kode Peserta : ${result.participantCode}
+
+━━━━━━━━━━━━━━━━━━
+
+Berikut saya lampirkan bukti transfer.
+
+Terima kasih.`;
+
+        window.open(
+
+            "https://wa.me/6282113866887?text="+
+
+            encodeURIComponent(message),
+
+            "_blank"
+
+        );
+
+        form.reset();
+
+        updateCategory();
+
+    }catch(err){
+
+        console.error(err);
+
+        alert("Terjadi kesalahan server.");
+
+    }
+
+});
+
+</script>
+
+</MainLayout>

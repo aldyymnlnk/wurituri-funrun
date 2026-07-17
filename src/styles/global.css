@@ -1,0 +1,299 @@
+/* ===================================
+   IMPORT COMPONENT
+=================================== */
+/* LANDING PAGE */
+@import "./Navbar.css";
+@import "./Hero.css";
+@import "./Countdown.css";
+@import "./stats.css";
+@import "./timeline.css";
+@import "./Category.css";
+@import "./gallery.css";
+@import "./sponsor.css";
+@import "./Benefit.css";
+@import "./faq.css";
+@import "./Footer.css";
+
+/* REGISTER */
+@import "./Register.css";
+
+/* ADMIN */
+@import "./login.css";
+@import "./admin.css";
+/* @import "./dashboard"; */
+
+/* ===================================
+   GOOGLE FONT
+=================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ===================================
+   ROOT
+=================================== */
+
+:root{
+
+    --primary:#2E7D32;
+    --primary-dark:#1B5E20;
+
+    --secondary:#FF9800;
+
+    --success:#4CAF50;
+    --danger:#F44336;
+    --warning:#FFC107;
+
+    --white:#ffffff;
+    --light:#F8F9FA;
+    --gray:#E5E7EB;
+
+    --text:#444;
+    --heading:#1f2937;
+
+    --shadow-sm:0 2px 8px rgba(0,0,0,.08);
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+    --shadow-lg:0 20px 40px rgba(0,0,0,.12);
+
+    --radius:16px;
+
+    --transition:.3s ease;
+
+}
+
+/* ===================================
+   RESET
+=================================== */
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    background:var(--light);
+    color:var(--text);
+    line-height:1.7;
+
+}
+
+img{
+
+    display:block;
+    width:100%;
+
+}
+
+a{
+
+    text-decoration:none;
+    color:inherit;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+button{
+
+    cursor:pointer;
+    border:none;
+    outline:none;
+    font-family:inherit;
+
+}
+
+input,
+textarea,
+select{
+
+    font-family:inherit;
+    outline:none;
+
+}
+
+/* ===================================
+   CONTAINER
+=================================== */
+
+.container{
+
+    width:90%;
+    max-width:1280px;
+    margin:auto;
+
+}
+
+/* ===================================
+   SECTION
+=================================== */
+
+section{
+
+    padding:100px 0;
+
+}
+
+/* ===================================
+   TITLE
+=================================== */
+
+.section-title{
+
+    text-align:center;
+    margin-bottom:60px;
+
+}
+
+.section-badge{
+
+    display:inline-block;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:40px;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+}
+
+.section-title h2{
+
+    font-size:42px;
+
+    color:var(--heading);
+
+    margin-bottom:15px;
+
+}
+
+.section-title p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    color:#666;
+
+}
+
+/* ===================================
+   BUTTON
+=================================== */
+
+.btn-primary{
+
+    display:inline-block;
+
+    padding:15px 35px;
+
+    background:var(--primary);
+
+    color:white;
+
+    border-radius:12px;
+
+    transition:var(--transition);
+
+    font-weight:600;
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.btn-outline{
+
+    display:inline-block;
+
+    padding:15px 35px;
+
+    border:2px solid var(--primary);
+
+    color:var(--primary);
+
+    border-radius:12px;
+
+    transition:var(--transition);
+
+}
+
+.btn-outline:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+/* ===================================
+   CARD
+=================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media(max-width:992px){
+
+    section{
+
+        padding:80px 0;
+
+    }
+
+    .section-title h2{
+
+        font-size:34px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .container{
+
+        width:94%;
+
+    }
+
+    .section-title h2{
+
+        font-size:28px;
+
+    }
+
+}

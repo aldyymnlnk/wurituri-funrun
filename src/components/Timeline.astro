@@ -1,0 +1,98 @@
+---
+const timeline = [
+  {
+    date: "01 Januari 2026",
+    title: "Pendaftaran Dibuka",
+    description:
+      "Peserta mulai melakukan registrasi melalui website Waru Turi Fun Run."
+  },
+
+  {
+    date: "31 Maret 2026",
+    title: "Pendaftaran Ditutup",
+    description:
+      "Pendaftaran akan ditutup apabila kuota telah terpenuhi."
+  },
+
+  {
+    date: "05 April 2026",
+    title: "Race Pack Collection",
+    description:
+      "Pengambilan Race Pack, Jersey, BIB Number dan Goodie Bag."
+  },
+
+  {
+    date: "12 April 2026",
+    title: "Race Day",
+    description:
+      "Pelaksanaan Waru Turi Fun Run 2026 dimulai pukul 05.30 WIB."
+  },
+
+  {
+    date: "12 April 2026",
+    title: "Awarding",
+    description:
+      "Pembagian medali finisher dan penghargaan kepada peserta."
+  }
+];
+---
+
+<section class="timeline" id="timeline">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span class="section-badge">
+                📅 Event Timeline
+            </span>
+
+            <h2>Jadwal Kegiatan</h2>
+
+            <p>
+                Jangan sampai melewatkan setiap tahapan Waru Turi Fun Run 2026.
+            </p>
+
+        </div>
+
+        <div class="timeline-wrapper">
+
+            {
+                timeline.map((item) => (
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-content">
+
+                            <span class="timeline-date">
+
+                                {item.date}
+
+                            </span>
+
+                            <h3>
+
+                                {item.title}
+
+                            </h3>
+
+                            <p>
+
+                                {item.description}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                ))
+            }
+
+        </div>
+
+    </div>
+
+</section>

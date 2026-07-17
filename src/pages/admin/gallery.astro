@@ -1,0 +1,159 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+
+import { supabase } from "../../lib/supabase";
+
+const { data: gallery } = await supabase
+.from("gallery")
+.select("*")
+.order("created_at",{ascending:false});
+---
+
+<AdminLayout title="Gallery">
+
+<AdminSidebar />
+
+<main class="admin-content">
+
+<AdminNavbar />
+
+<section class="table-card">
+
+<h2>
+
+Gallery Event
+
+</h2>
+
+<div style="margin-bottom:20px;">
+
+<a
+href="/admin/gallery/add"
+class="btn btn-success"
+>
+
++ Tambah Foto
+
+</a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Preview</th>
+
+<th>Judul</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{
+
+gallery && gallery.length>0
+
+?
+
+gallery.map((item,index)=>(
+
+<tr>
+
+<td>{index+1}</td>
+
+<td>
+
+<img
+src={item.image}
+width="120"
+/>
+
+</td>
+
+<td>
+
+{item.title}
+
+</td>
+
+<td>
+    <a
+    href={`/admin/gallery/edit/${item.id}`}
+    class="btn btn-warning"
+>
+
+    ✏ Edit
+
+</a>
+
+<form
+    action="/api/deleteGallery"
+    method="POST"
+    style="display:inline-block;"
+    onsubmit="return confirm('Hapus foto ini?')"
+>
+
+    <input
+        type="hidden"
+        name="id"
+        value={item.id}
+    />
+
+    <button
+        class="btn btn-danger"
+        type="submit"
+    >
+
+        🗑 Hapus
+
+    </button>
+
+</form>
+
+</td>
+
+</tr>
+
+))
+
+:
+
+(
+
+<tr>
+
+<td
+colspan="4"
+style="text-align:center;padding:40px;"
+>
+
+Belum ada foto gallery.
+
+</td>
+
+</tr>
+
+)
+
+}
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+</AdminLayout>

@@ -1,0 +1,29 @@
+---
+const currentPath = Astro.url.pathname;
+
+const menuItems = [
+  { href: "/admin/dashboard", label: "Dashboard" },
+  { href: "/admin/participants", label: "Peserta" },
+  { href: "/admin/payments", label: "Pembayaran" },
+  { href: "/admin/statistics", label: "Statistik" },
+   { href: "/admin/settings", label: "settings" },
+];
+---
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>Waru Turi Run</h2>
+  </div>
+
+  <nav>
+    {menuItems.map((item) => (
+      <a href={item.href} class={currentPath.startsWith(item.href) ? "active" : ""}>
+        {item.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="/admin/logout">Logout</a>
+  </div>
+</aside>

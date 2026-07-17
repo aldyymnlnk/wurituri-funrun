@@ -1,0 +1,430 @@
+---
+export const prerender = false;
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../../components/admin/AdminNavbar.astro";
+
+import { supabase } from "../../../lib/supabase";
+
+const id = Astro.params.id;
+
+// =========================
+// Ambil data peserta
+// =========================
+
+const { data: participant } = await supabase
+    .from("participants")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+if (!participant) {
+
+    return Astro.redirect("/admin/participants");
+
+}
+---
+
+<AdminLayout title="Edit Peserta">
+
+<AdminSidebar />
+
+<main class="admin-content">
+
+<AdminNavbar />
+
+<section class="table-card">
+
+<h2>
+
+Edit Data Peserta
+
+</h2>
+
+<form
+action="/api/updateParticipant"
+method="POST"
+>
+
+<input
+type="hidden"
+name="id"
+value={participant.id}
+/>
+
+<div class="form-group">
+
+<label>
+
+Kode Peserta
+
+</label>
+
+<input
+type="text"
+name="participant_code"
+value={participant.participant_code}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Nama Lengkap
+
+</label>
+
+<input
+type="text"
+name="fullname"
+value={participant.fullname}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Email
+
+</label>
+
+<input
+type="email"
+name="email"
+value={participant.email}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Nomor WhatsApp
+
+</label>
+
+<input
+type="text"
+name="phone"
+value={participant.phone}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Tanggal Lahir
+
+</label>
+
+<input
+type="date"
+name="birth_date"
+value={participant.birth_date}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Jenis Kelamin
+
+</label>
+
+<select name="gender">
+
+<option
+value="Laki-laki"
+selected={participant.gender==="Laki-laki"}
+>
+
+Laki-laki
+
+</option>
+
+<option
+value="Perempuan"
+selected={participant.gender==="Perempuan"}
+>
+
+Perempuan
+
+</option>
+
+</select>
+
+</div>
+<div class="form-group">
+
+<label>
+
+Kategori
+
+</label>
+
+<select name="category">
+
+<option
+value="5K Fun Run"
+selected={participant.category==="5K Fun Run"}
+>
+
+5K Fun Run
+
+</option>
+
+<option
+value="10K Challenge"
+selected={participant.category==="10K Challenge"}
+>
+
+10K Challenge
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Ukuran Jersey
+
+</label>
+
+<select name="jersey_size">
+
+<option value="S" selected={participant.jersey_size==="S"}>S</option>
+
+<option value="M" selected={participant.jersey_size==="M"}>M</option>
+
+<option value="L" selected={participant.jersey_size==="L"}>L</option>
+
+<option value="XL" selected={participant.jersey_size==="XL"}>XL</option>
+
+<option value="XXL" selected={participant.jersey_size==="XXL"}>XXL</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Golongan Darah
+
+</label>
+
+<select name="blood_type">
+
+<option value="A" selected={participant.blood_type==="A"}>A</option>
+
+<option value="B" selected={participant.blood_type==="B"}>B</option>
+
+<option value="AB" selected={participant.blood_type==="AB"}>AB</option>
+
+<option value="O" selected={participant.blood_type==="O"}>O</option>
+
+</select>
+
+</div>
+
+<hr style="margin:30px 0;">
+
+<h2>
+
+Kontak Darurat
+
+</h2>
+
+<div class="form-group">
+
+<label>
+
+Nama Kontak Darurat
+
+</label>
+
+<input
+type="text"
+name="emergency_name"
+value={participant.emergency_name}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Nomor Kontak Darurat
+
+</label>
+
+<input
+type="text"
+name="emergency_phone"
+value={participant.emergency_phone}
+/>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Hubungan
+
+</label>
+
+<input
+type="text"
+name="emergency_relation"
+value={participant.emergency_relation}
+/>
+
+</div>
+
+<hr style="margin:30px 0;">
+
+<h2>
+
+Pembayaran
+
+</h2>
+
+<div class="form-group">
+
+<label>
+
+Metode Pembayaran
+
+</label>
+
+<select name="payment_method">
+
+<option
+value="BRI"
+selected={participant.payment_method==="BRI"}
+>
+
+BRI
+
+</option>
+
+<option
+value="BCA"
+selected={participant.payment_method==="BCA"}
+>
+
+BCA
+
+</option>
+
+<option
+value="Website"
+selected={participant.payment_method==="Website"}
+>
+
+Website
+
+</option>
+
+</select>
+
+</div>
+<div class="form-group">
+
+<label>
+
+Status Pembayaran
+
+</label>
+
+<select name="payment_status">
+
+<option
+value="Belum Bayar"
+selected={participant.payment_status==="Belum Bayar"}
+>
+
+Belum Bayar
+
+</option>
+
+<option
+value="Lunas"
+selected={participant.payment_status==="Lunas"}
+>
+
+Lunas
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Harga
+
+</label>
+
+<input
+type="number"
+name="price"
+value={participant.price}
+/>
+
+</div>
+
+<div
+style="
+display:flex;
+gap:15px;
+margin-top:35px;
+"
+>
+
+<button
+type="submit"
+class="btn btn-success"
+>
+
+💾 Simpan Perubahan
+
+</button>
+
+<a
+href="/admin/participants"
+class="btn btn-warning"
+>
+
+⬅ Kembali
+
+</a>
+
+</div>
+
+</form>
+
+</section>
+
+</main>
+
+</AdminLayout>

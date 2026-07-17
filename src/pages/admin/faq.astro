@@ -1,0 +1,146 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminSidebar from "../../components/admin/AdminSidebar.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+
+import { supabase } from "../../lib/supabase";
+
+const { data: faq } = await supabase
+.from("faq")
+.select("*")
+.order("created_at",{ascending:false});
+---
+
+<AdminLayout title="FAQ">
+
+<AdminSidebar />
+
+<main class="admin-content">
+
+<AdminNavbar />
+
+<section class="table-card">
+
+<h2>
+
+Kelola FAQ
+
+</h2>
+
+<div style="margin-bottom:20px;">
+
+<a
+href="/admin/faq/add"
+class="btn btn-success"
+>
+
++ Tambah FAQ
+
+</a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>No</th>
+
+<th>Pertanyaan</th>
+
+<th>Jawaban</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{
+
+faq && faq.length>0
+
+?
+
+faq.map((item,index)=>(
+
+<tr>
+
+<td>{index+1}</td>
+
+<td>{item.question}</td>
+
+<td>{item.answer}</td>
+
+<td>
+
+<a
+href={`/admin/faq/edit/${item.id}`}
+class="btn btn-warning"
+>
+
+✏ Edit
+
+</a>
+
+<form
+action="/api/deleteFaq"
+method="POST"
+style="display:inline-block;"
+onsubmit="return confirm('Hapus FAQ?')"
+>
+
+<input
+type="hidden"
+name="id"
+value={item.id}
+/>
+
+<button
+type="submit"
+class="btn btn-danger"
+>
+
+🗑 Hapus
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+))
+
+:
+
+(
+
+<tr>
+
+<td colspan="4" style="text-align:center;">
+
+Belum ada FAQ.
+
+</td>
+
+</tr>
+
+)
+
+}
+
+</tbody>
+
+</table>
+
+</section>
+
+</main>
+
+</AdminLayout>

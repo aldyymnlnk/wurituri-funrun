@@ -1,0 +1,165 @@
+/* ===================================
+   TIMELINE
+=================================== */
+
+.timeline{
+
+    padding:100px 0;
+
+    background:#f8fafc;
+
+}
+
+.timeline-wrapper{
+
+    position:relative;
+
+    max-width:900px;
+
+    margin:60px auto 0;
+
+}
+
+.timeline-wrapper::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:25px;
+
+    top:0;
+
+    width:4px;
+
+    height:100%;
+
+    background:#2E7D32;
+
+}
+
+.timeline-item{
+
+    position:relative;
+
+    display:flex;
+
+    gap:35px;
+
+    margin-bottom:45px;
+
+}
+
+.timeline-dot{
+
+    width:50px;
+
+    height:50px;
+
+    background:#2E7D32;
+
+    border-radius:50%;
+
+    border:6px solid white;
+
+    box-shadow:0 0 0 4px rgba(46,125,50,.2);
+
+    flex-shrink:0;
+
+    z-index:2;
+
+}
+
+.timeline-content{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+    width:100%;
+
+}
+
+.timeline-content:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.timeline-date{
+
+    display:inline-block;
+
+    background:#2E7D32;
+
+    color:white;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    margin-bottom:15px;
+
+    font-size:14px;
+
+}
+
+.timeline-content h3{
+
+    color:#2E7D32;
+
+    margin-bottom:10px;
+
+    font-size:24px;
+
+}
+
+.timeline-content p{
+
+    color:#666;
+
+    line-height:1.8;
+
+}
+
+@media(max-width:768px){
+
+.timeline-wrapper::before{
+
+left:18px;
+
+}
+
+.timeline-item{
+
+gap:20px;
+
+}
+
+.timeline-dot{
+
+width:36px;
+
+height:36px;
+
+}
+
+.timeline-content{
+
+padding:20px;
+
+}
+
+.timeline-content h3{
+
+font-size:20px;
+
+}
+
+}
