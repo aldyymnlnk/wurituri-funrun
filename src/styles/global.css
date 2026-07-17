@@ -2,20 +2,20 @@
    IMPORT COMPONENT
 =================================== */
 /* LANDING PAGE */
-@import "./Navbar.css";
-@import "./Hero.css";
-@import "./Countdown.css";
+@import "./navbar.css";
+@import "./hero.css";
+@import "./countdown.css";
 @import "./stats.css";
 @import "./timeline.css";
-@import "./Category.css";
+@import "./category.css";
 @import "./gallery.css";
 @import "./sponsor.css";
-@import "./Benefit.css";
+@import "./benefit.css";
 @import "./faq.css";
-@import "./Footer.css";
+@import "./footer.css";
 
 /* REGISTER */
-@import "./Register.css";
+@import "./register.css";
 
 /* ADMIN */
 @import "./login.css";
